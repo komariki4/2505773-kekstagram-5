@@ -1,4 +1,5 @@
 const bigPictureElement = document.querySelector('.big-picture');
+const commentsCountElement = bigPictureElement.querySelector('.social__comment-count');
 const commentListElement = bigPictureElement.querySelector('.social__comments');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 const bodyElement = document.querySelector('body');
