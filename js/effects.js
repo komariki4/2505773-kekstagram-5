@@ -73,7 +73,7 @@ const setImageStyle = () => {
   }
   const {value} = effectLevelElement;
   const {style, unit} = effectToFilter[chosenEffect];
-  imageElement.style.filter = ${style}(${value}${unit});
+  imageElement.style.filter = $style($value$unit);
 };
 const onSliderUpdate = () => {
   effectLevelElement.value = sliderElement.noUiSlider.get();
