@@ -7,8 +7,8 @@ const modalElement = document.querySelector('.img-upload');
 const scaleInputElement = modalElement.querySelector('.scale__control--value');
 const imageElement = modalElement.querySelector('.img-upload__preview img');
 const scaleImage = (value) => {
-  imageElement.style.transform = scale($value / PERCENT);
-  scaleInputElement.value = ${value}%;
+  imageElement.style.transform = `scale(${value / PERCENT})`;
+  scaleInputElement.value = `${value}%`;
 };
 const onSmallerButtonClick = () => {
   scaleImage(
