@@ -198,4 +198,3 @@ function openErrorMessage() {
     error.remove();
   });
 }
-
