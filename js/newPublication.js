@@ -116,7 +116,7 @@ hashtagsField.addEventListener('input', (evt) => {
   const isValid = pristine.validate();
   if (!isValid) {
     submitBtn.setAttribute('disabled', true);
-  } else {
+  }else{
     submitBtn.removeAttribute('disabled');
   }
 });
@@ -126,7 +126,7 @@ descriptionField.addEventListener('input', (evt) => {
   const isValid = pristine.validate();
   if (!isValid) {
     submitBtn.setAttribute('disabled', true);
-  } else {
+  }else{
     submitBtn.removeAttribute('disabled');
   }
 });
@@ -186,3 +186,4 @@ function openErrorMessage() {
     error.remove();
   });
 }
+
