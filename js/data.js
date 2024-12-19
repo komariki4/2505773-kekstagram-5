@@ -3,7 +3,7 @@ import {fetchData} from './api.js';
 const MAX_HASHTAGS_COUNT = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
 
-const SCALE = {
+const Scale = {
   MIN: 25,
   MAX: 100
 };
@@ -19,7 +19,7 @@ export async function getPhotoArray() {
 export {
   MAX_HASHTAGS_COUNT,
   MAX_DESCRIPTION_LENGTH,
-  SCALE,
+  Scale,
   SCALE_STEP,
   DEFAULT_SCALE
 };

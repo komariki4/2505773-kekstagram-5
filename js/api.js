@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://29.javascript.pages.academy/kekstagram';
+const SERVER_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
 
 export const fetchData = () => fetch(`${SERVER_URL}/data`)
   .then((response) => {

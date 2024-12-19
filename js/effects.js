@@ -1,11 +1,4 @@
-const modalElement = document.querySelector('.img-upload');
-const imageElement = modalElement.querySelector('.img-upload__preview img');
-const effectsElement = modalElement.querySelector('.effects');
-const sliderElement = modalElement.querySelector('.effect-level__slider');
-const sliderContainer = modalElement.querySelector('.img-upload__effect-level');
-const effectLevelElement = modalElement.querySelector('.effect-level__value');
-
-const effect = {
+const Effect = {
   DEFAULT: 'none',
   CHROME: 'chrome',
   SEPIA: 'sepia',
@@ -14,54 +7,62 @@ const effect = {
   HEAT: 'heat',
 };
 
+const modalElement = document.querySelector('.img-upload');
+const imageElement = modalElement.querySelector('.img-upload__preview img');
+const effectsElement = modalElement.querySelector('.effects');
+const sliderElement = modalElement.querySelector('.effect-level__slider');
+const sliderContainer = modalElement.querySelector('.img-upload__effect-level');
+
+const effectLevelElement = modalElement.querySelector('.effect-level__value');
+
 const effectToFilter = {
-  [effect.CHROME]: {
+  [Effect.CHROME]: {
     style: 'grayscale',
     unit: '',},
-  [effect.SEPIA]: {
+  [Effect.SEPIA]: {
     style: 'sepia',
     unit: '',},
-  [effect.MARVIN]: {
+  [Effect.MARVIN]: {
     style: 'invert',
     unit: '%',},
-  [effect.HEAT]: {
+  [Effect.HEAT]: {
     style: 'brightness',
     unit: '',},
-  [effect.PHOBOS]: {
+  [Effect.PHOBOS]: {
     style: 'blur',
     unit: 'px',},
 };
 
 const effectToSliderOptions = {
-  [effect.DEFAULT]: {
+  [Effect.DEFAULT]: {
     min: 0,
     max: 100,
     step: 1,},
-  [effect.CHROME]: {
+  [Effect.CHROME]: {
     min: 0,
     max: 1,
     step: 0.1,},
-  [effect.SEPIA]: {
+  [Effect.SEPIA]: {
     min: 0,
     max: 1,
     step: 0.1,},
-  [effect.MARVIN]: {
+  [Effect.MARVIN]: {
     min: 0,
     max: 100,
     step: 1,},
-  [effect.PHOBOS]: {
+  [Effect.PHOBOS]: {
     min: 0,
     max: 3,
     step: 0.1,},
-  [effect.HEAT]: {
+  [Effect.HEAT]: {
     min: 0,
     max: 3,
     step: 0.1,},
 };
 
-let chosenEffect = effect.DEFAULT;
+let chosenEffect = Effect.DEFAULT;
 
-const isDefault = () => chosenEffect === effect.DEFAULT;
+const isDefault = () => chosenEffect === Effect.DEFAULT;
 
 const setImageStyle = () => {
   if (isDefault()) {
@@ -120,7 +121,7 @@ const setEffect = (result) => {
   setImageStyle();
 };
 
-const resetEffect = () => setEffect(effect.DEFAULT);
+const resetEffect = () => setEffect(Effect.DEFAULT);
 
 const onEffectsChange = (evt) => setEffect(evt.target.value);
 
