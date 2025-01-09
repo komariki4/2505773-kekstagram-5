@@ -1,7 +1,7 @@
 import { onDocumentKeydown } from './util.js';
 
-const commentTemplate = document.querySelector('.social__comment');
-const commentsLoader = document.querySelector('.comments-loader');
+const commentTemplateElement = document.querySelector('.social__comment');
+const commentsLoaderElement = document.querySelector('.comments-loader');
 
 const showNextComments = () => {
   let currentComment = document.querySelector('.social__comment.hidden');
@@ -9,13 +9,13 @@ const showNextComments = () => {
 
   for (; i < 5; i++) {
     if (currentComment === null) {
-      commentsLoader.classList.add('hidden');
+      commentsLoaderElement.classList.add('hidden');
       break;
     }
     currentComment.classList.remove('hidden');
     currentComment = currentComment.nextElementSibling;
     if (currentComment === null) {
-      commentsLoader.classList.add('hidden');
+      commentsLoaderElement.classList.add('hidden');
       document.querySelector('.loaded-comments-count').textContent =
         +document.querySelector('.loaded-comments-count').textContent + 1;
       break;
@@ -28,7 +28,7 @@ const showNextComments = () => {
 const loadAllComments = (commentsContainer, comments) => {
   const commentsFragment = document.createDocumentFragment();
   for (let i = 0; i < comments.length; ++i) {
-    const comment = commentTemplate.cloneNode(true);
+    const comment = commentTemplateElement.cloneNode(true);
     comment.querySelector('.social__picture').src = comments[i].avatar;
     comment.querySelector('.social__picture').alt = comments[i].name;
     comment.querySelector('.social__text').textContent = comments[i].message;
@@ -62,6 +62,7 @@ function openPicture(evt, url, description, likes, comments) {
   openedPicture
     .querySelector('.social__comments-loader')
     .addEventListener('click', showNextComments);
+
 }
 
 function closePicture(evt) {
@@ -72,7 +73,7 @@ function closePicture(evt) {
   document
     .querySelector('.social__comments-loader')
     .removeEventListener('click', showNextComments);
-  commentsLoader.classList.remove('hidden');
+  commentsLoaderElement.classList.remove('hidden');
 }
 
 export { openPicture };

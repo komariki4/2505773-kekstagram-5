@@ -4,18 +4,18 @@ import {resetEffect, initEffect} from './effects.js';
 import {resetScale} from './scale.js';
 import {sendData} from './api.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const uploadInput = uploadForm.querySelector('.img-upload__input');
-const imageOverlay = uploadForm.querySelector('.img-upload__overlay.hidden');
-const closeButton = uploadForm.querySelector('.img-upload__cancel');
-const image = uploadForm.querySelector('.img-upload__preview img');
-const hashtagsField = uploadForm.querySelector('.text__hashtags');
-const descriptionField = uploadForm.querySelector('.text__description');
-const submitBtn = uploadForm.querySelector('#upload-submit');
+const uploadFormElement = document.querySelector('.img-upload__form');
+const uploadInputElement = uploadFormElement.querySelector('.img-upload__input');
+const imageOverlayElement = uploadFormElement.querySelector('.img-upload__overlay.hidden');
+const closeButtonElement = uploadFormElement.querySelector('.img-upload__cancel');
+const imageElement = uploadFormElement.querySelector('.img-upload__preview img');
+const hashtagsFieldElement = uploadFormElement.querySelector('.text__hashtags');
+const descriptionFieldElement = uploadFormElement.querySelector('.text__description');
+const submitBtnElement = uploadFormElement.querySelector('#upload-submit');
 
-const validationForm = /^#[0-9a-zа-яё]{1,19}$/i;
+const HASHTAG_REGEXP = /^#[0-9a-zа-яё]{1,19}$/i;
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadFormElement, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload--invalid',
   successClass: 'img-upload--valid',
@@ -25,12 +25,12 @@ const pristine = new Pristine(uploadForm, {
 });
 
 
-uploadInput.addEventListener('change', function() {
+uploadInputElement.addEventListener('change', function() {
   const file = this.files[0];
   if (file) {
     const reader = new FileReader();
     reader.addEventListener('load', () => {
-      image.src = reader.result;
+      imageElement.src = reader.result;
     }, false);
     reader.readAsDataURL(file);
   }
@@ -57,7 +57,7 @@ const validHashtages = (value) => {
   }
   const hashtags = value.trim().split(' ');
   for (const element of hashtags) {
-    if (!validationForm.test(element)) {
+    if (!HASHTAG_REGEXP.test(element)) {
       return false;
     }
   }
@@ -65,19 +65,19 @@ const validHashtages = (value) => {
 };
 
 pristine.addValidator(
-  hashtagsField,
+  hashtagsFieldElement,
   validateHashtagsCount,
   'Максимальное количество хэштегов - 5'
 );
 
 pristine.addValidator(
-  hashtagsField,
+  hashtagsFieldElement,
   validateHashtagsUniqueness,
   'Не должно быть повторяющихся хэштегов'
 );
 
 pristine.addValidator(
-  hashtagsField,
+  hashtagsFieldElement,
   validHashtages,
   'Ошибка хештега'
 );
@@ -85,7 +85,7 @@ pristine.addValidator(
 const validateDescription = (value) => value.trim().length <= MAX_DESCRIPTION_LENGTH;
 
 pristine.addValidator(
-  descriptionField,
+  descriptionFieldElement,
   validateDescription,
   'Описание не может быть больше 140 символов'
 );
@@ -93,61 +93,61 @@ pristine.addValidator(
 function resetForm() {
   resetEffect();
   resetScale();
-  uploadForm.reset();
+  uploadFormElement.reset();
 }
 
 function closeOverlay(){
-  imageOverlay.classList.add('hidden');
+  imageOverlayElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  closeButton.removeEventListener('click', () => {
+  closeButtonElement.removeEventListener('click', () => {
     resetForm(); closeOverlay();
   });
   document.removeEventListener('keydown', onDocumentKeydown(closeOverlay));
-  uploadInput.addEventListener('click', openOverlay);
-  uploadInput.value = null;
-  hashtagsField.textContent = '';
-  descriptionField.textContent = '';
-  submitBtn.removeAttribute('disabled');
+  uploadInputElement.addEventListener('change', openOverlay);
+  uploadInputElement.value = null;
+  hashtagsFieldElement.textContent = '';
+  descriptionFieldElement.textContent = '';
+  submitBtnElement.removeAttribute('disabled');
 }
 
 function openOverlay() {
   initEffect();
-  imageOverlay.classList.remove('hidden');
+  imageOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  closeButton.addEventListener('click', () => {
+  closeButtonElement.addEventListener('click', () => {
     resetForm(); closeOverlay();
   });
   document.addEventListener('keydown', onDocumentKeydown(closeOverlay));
-  uploadInput.removeEventListener('click', openOverlay);
+  uploadInputElement.removeEventListener('change', openOverlay);
 }
 
-uploadInput.addEventListener('change', openOverlay);
+uploadInputElement.addEventListener('change', openOverlay);
 
-hashtagsField.addEventListener('input', (evt) => {
+hashtagsFieldElement.addEventListener('input', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (!isValid) {
-    submitBtn.setAttribute('disabled', 'true');
+    submitBtnElement.setAttribute('disabled', 'true');
   }else{
-    submitBtn.removeAttribute('disabled');
+    submitBtnElement.removeAttribute('disabled');
   }
 });
 
-descriptionField.addEventListener('input', (evt) => {
+descriptionFieldElement.addEventListener('input', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (!isValid) {
-    submitBtn.setAttribute('disabled', 'true');
+    submitBtnElement.setAttribute('disabled', 'true');
   }else{
-    submitBtn.removeAttribute('disabled');
+    submitBtnElement.removeAttribute('disabled');
   }
 });
 
 
-uploadForm.addEventListener('submit', (event) => {
+uploadFormElement.addEventListener('submit', (event) => {
   event.preventDefault();
-  const formData = new FormData(uploadForm);
-  submitBtn.setAttribute('disabled', 'true');
+  const formData = new FormData(uploadFormElement);
+  submitBtnElement.setAttribute('disabled', 'true');
   sendData(
     formData,
     () => {

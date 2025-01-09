@@ -7,11 +7,15 @@ const Effect = {
   HEAT: 'heat',
 };
 
+const ALERT_SHOW_TIME = 5000;
+const RERENDER_DELAY = 500;
+
+const alertContainer = document.createElement('div');
 const modalElement = document.querySelector('.img-upload');
 const imageElement = modalElement.querySelector('.img-upload__preview img');
 const effectsElement = modalElement.querySelector('.effects');
 const sliderElement = modalElement.querySelector('.effect-level__slider');
-const sliderContainer = modalElement.querySelector('.img-upload__effect-level');
+const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
 
 const effectLevelElement = modalElement.querySelector('.effect-level__value');
 
@@ -79,9 +83,9 @@ const onSliderUpd = () => {
   setImageStyle();
 };
 
-const showSlider = () => sliderContainer.classList.remove('hidden');
+const showSlider = () => sliderContainerElement.classList.remove('hidden');
 
-const hideSlider = () => sliderContainer.classList.add('hidden');
+const hideSlider = () => sliderContainerElement.classList.add('hidden');
 
 const createSlider = ({ min, max, step }) => {
   noUiSlider.create(sliderElement, {
@@ -98,7 +102,7 @@ const createSlider = ({ min, max, step }) => {
   hideSlider();
 };
 
-const updSlider = ({ min, max, step }) => {
+const updateSlider = ({ min, max, step }) => {
   sliderElement.noUiSlider.updateOptions({
     range: {min, max},
     step,
@@ -110,7 +114,7 @@ const setSlider = () => {
   if (isDefault()) {
     hideSlider();
   } else {
-    updSlider(effectToSliderOptions[chosenEffect]);
+    updateSlider(effectToSliderOptions[chosenEffect]);
     showSlider();
   }
 };
@@ -123,7 +127,19 @@ const setEffect = (result) => {
 
 const resetEffect = () => setEffect(Effect.DEFAULT);
 
-const onEffectsChange = (evt) => setEffect(evt.target.value);
+setTimeout(() => {
+  alertContainer.remove();
+}, ALERT_SHOW_TIME);
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const onEffectsChange = debounce((evt) => setEffect(evt.target.value), RERENDER_DELAY);
 
 let sliderCreated = false;
 

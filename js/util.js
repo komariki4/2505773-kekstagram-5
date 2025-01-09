@@ -4,18 +4,11 @@ export const onDocumentKeydown = (closingFunc) => function (evt) {
   }
 };
 
-export const debounce = (func, delay) => {
-  let timeout;
-  return function (...args) {
-    const wait = () => {
-      timeout = null;
-    };
-    const callNow = !timeout;
-    if (callNow) {
-      func.apply(this, args);
-      clearTimeout(timeout);
-      timeout = setTimeout(wait, delay);
-    }
+export const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
 

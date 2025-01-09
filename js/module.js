@@ -1,5 +1,5 @@
 import {getPhotoArray} from './data.js';
-import {openPicture} from './openBigPic.js';
+import {openPicture} from './open-big-pic.js';
 import {debounce} from './util.js';
 
 const MAX_PHOTOS = 10;
